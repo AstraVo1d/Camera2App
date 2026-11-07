@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cam2app — عين المنزل</title>
+<meta name="description" content="حوّل هاتفك إلى كاميرا مراقبة ذكية ترسل لك تنبيه لحظة ما يقرّب حد">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#0b0e14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== Setup wizard (shown once, before Telegram + camera are configured) ===== -->
+  <div class="wizard" id="wizard" hidden>
+    <div class="wizard-steps">
+      <span id="ws1"></span><span id="ws2"></span><span id="ws3"></span><span id="ws4"></span>
+    </div>
+    <div class="wizard-body" id="wizardBody"></div>
+    <div class="wizard-nav" id="wizardNav"></div>
+  </div>
+
+  <!-- ===== Main app ===== -->
+  <div id="mainApp" hidden>
+    <div class="topbar">
+      <div class="brand">
+        <span class="dot" id="statusDot"></span>
+        <span>Cam2app</span>
+      </div>
+      <button class="icon-btn" id="openSettings" aria-label="الإعدادات">⚙︎</button>
+    </div>
+
+    <div class="stage" id="stage">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="overlay"></canvas>
+      <div class="stage-badge" id="fpsBadge" hidden></div>
+      <div class="stage-overlay" id="stageOverlay">
+        <div>
+          <strong>جاهز للمراقبة</strong>
+          اضغط "ابدأ المراقبة" تحت عشان يشتغل الكشف
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="row">
+        <span class="label">المراقبة</span>
+        <div class="switch" id="monitorSwitch"></div>
+      </div>
+      <div class="row">
+        <span class="label">الكاميرا</span>
+        <button class="icon-btn" id="flipCamera" style="width:auto;padding:0 14px;font-size:13px;">🔄 قلب</button>
+      </div>
+      <div class="row">
+        <span class="label">حساسية الاقتراب</span>
+        <span class="value mono" id="sensVal">50%</span>
+      </div>
+      <input type="range" id="sensitivity" min="20" max="85" value="50">
+      <div class="hint">كل ما رفعت الحساسية، يحتاج الشخص يقرب أكثر عشان ينبهك — خففها لو تبي تنبيه من بعيد.</div>
+    </div>
+
+    <div class="panel">
+      <div class="row">
+        <span class="label">آخر التنبيهات</span>
+      </div>
+      <div class="log-list" id="logList">
+        <div class="log-empty">ماراح يصير تنبيه إلا إذا حد يقرب من الكاميرا</div>
+      </div>
+    </div>
+
+    <div class="footnote">كل المعالجة تصير داخل المتصفح على جهازك — ما في فيديو يترفع لأي سيرفر</div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
